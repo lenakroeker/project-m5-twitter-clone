@@ -84,8 +84,8 @@ const Avatar = styled.img`
   border: 3px solid white;
   border-radius: 50%;
   position: absolute;
-  left: 340px;
-  top: 240px;
+  left: 27vw;
+  top: calc(19vw - 15px);
 `;
 
 const Name = styled.p`
