@@ -4,7 +4,7 @@ import moment from "moment";
 import { useHistory } from "react-router-dom";
 import ActionBar from "../components/ActionBar";
 
-export const EachTweet = (props) => {
+export const BigTweet = (props) => {
   let history = useHistory();
 
   console.log("props" + props);
@@ -20,47 +20,22 @@ export const EachTweet = (props) => {
     media,
     numLikes,
     tweetLiked,
-    isRetweeted,
-    retweetedFrom,
   } = props;
 
-  console.log(isRetweeted);
-  console.log(retweetedFrom);
-
-  const time = moment(timestamp).format("MMM Do");
+  const time = moment(timestamp).format("MMMM DDDo YYYY, h:mm a");
   console.log(numLikes);
   return (
     <TweetBox key={tweetId}>
-      <Avatar
-        src={src}
-        onClick={() => {
-          history.push(authorHref);
-        }}
-      />
+      <Avatar src={src} onClick={() => history.push(authorHref)} />
       <InfoDiv onClick={() => history.push(tweetHref)}>
-        <Name
-          onClick={(ev) => {
-            ev.stopPropagation();
-            history.push(authorHref);
-          }}
-        >
-          {name}{" "}
-        </Name>
-        <Handle
-          onClick={(ev) => {
-            ev.stopPropagation();
-            history.push(authorHref);
-          }}
-        >
-          {" "}
-          @{handle}
-        </Handle>
-        <Timestamp>{time}</Timestamp>
+        <Name>{name} </Name>
+        <Handle> @{handle}</Handle>
         <Status>{status}</Status>
         {media?.map((img) => {
           return <Media src={img.url} />;
         })}
       </InfoDiv>
+      <Timestamp>{time}</Timestamp>
       <ActionBar
         tweetLiked={tweetLiked}
         tweetId={tweetId}
@@ -72,16 +47,20 @@ export const EachTweet = (props) => {
 
 const TweetBox = styled.div`
   padding: 10px;
-  margin-right: 50px;
+  margin: 50px 80px;
+
   border: 1px solid lightgray;
   font-size: 16px;
   display: grid;
   grid-template-columns: 80px 1fr;
-  grid-template-areas: "avatar info";
+  grid-template-areas:
+    "avatar info"
+    "time time";
 `;
 
 const Timestamp = styled.p`
-  font-size: 16px;
+  grid-area: time;
+  font-size: 14px;
   color: grey;
   display: inline;
 `;
@@ -107,11 +86,9 @@ const InfoDiv = styled.div`
 
 const Name = styled.p`
   font-weight: bold;
-  display: inline;
 `;
 
 const Handle = styled.p`
-  display: inline;
   padding: 0 10px;
 `;
 
@@ -119,8 +96,4 @@ const Media = styled.img`
   width: 80%;
   margin: 20px 0;
   border-radius: 5%;
-`;
-
-const Retweeted = styled.p`
-  background-color: lightgrey;
 `;

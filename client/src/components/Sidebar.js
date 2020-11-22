@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import { ReactComponent as Logo } from "../assets/logo.svg";
 import { COLORS } from "../constants";
 import { FiHome, FiUser, FiBell, FiBookmark } from "react-icons/fi";
@@ -8,6 +8,7 @@ import { CurrentUserContext } from "../components/CurrentUserContext";
 
 const Sidebar = () => {
   const { currentUser, status, setStatus } = useContext(CurrentUserContext);
+
   return (
     <Wrapper>
       <svg width="100px">

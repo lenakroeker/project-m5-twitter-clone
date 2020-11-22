@@ -3,45 +3,72 @@ import styled from "styled-components";
 import { CurrentUserContext } from "../components/CurrentUserContext";
 import { EachTweet } from "../components/tweet";
 import { SendTweet } from "../pages/SendTweet";
+import { ErrorPage } from "../pages/ErrorPage";
 
 const HomeFeed = () => {
   const [homeTweets, setHomeTweets] = useState();
   const { currentUser, status } = useContext(CurrentUserContext);
+  const [fetchHomeFeed, setFetchHomeFeed] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
   useEffect(() => {
     fetch("/api/me/home-feed")
       .then((response) => response.json())
-      .then((response) => setHomeTweets(response.tweetsById));
-  }, []);
+      .then((response) => setHomeTweets(response.tweetsById))
+      .catch((error) => {
+        console.log(error);
+        setErrorMsg("error");
+      });
+  }, [fetchHomeFeed]);
 
   return (
-    <Wrapper>
-      <Head>Home</Head>
-      {currentUser ? (
-        <MyAvatar src={currentUser.avatarSrc} />
+    <>
+      {errorMsg === "error" ? (
+        <ErrorPage />
       ) : (
-        <div>loading</div>
+        <Wrapper>
+          <Head>Home</Head>
+          {currentUser ? (
+            <MyAvatar src={currentUser.avatarSrc} />
+          ) : (
+            <div>loading</div>
+          )}
+          <SendTweet setFetchHomeFeed={setFetchHomeFeed} />
+          {homeTweets ? (
+            Object.values(homeTweets)
+              .sort((a, b) => {
+                if (b.timestamp > a.timestamp) {
+                  return 1;
+                } else {
+                  return -1;
+                }
+              })
+              .map((tweet) => {
+                console.log(tweet);
+                return (
+                  <EachTweet
+                    key={tweet.id}
+                    tweetId={tweet.id}
+                    authorHref={`/profile/${tweet.author.handle}`}
+                    tweetHref={`/tweet/${tweet.id}`}
+                    src={tweet.author.avatarSrc}
+                    name={tweet.author.displayName}
+                    handle={tweet.author.handle}
+                    timestamp={tweet.timestamp}
+                    status={tweet.status}
+                    media={tweet.media}
+                    tweetLiked={tweet.isLiked}
+                    numLikes={tweet.numLikes}
+                    isRetweeted={tweet.isRetweeted}
+                  />
+                );
+              })
+          ) : (
+            <div>loading</div>
+          )}
+        </Wrapper>
       )}
-      <SendTweet />
-      {homeTweets ? (
-        Object.values(homeTweets).map((tweet) => {
-          return (
-            <EachTweet
-              key={tweet.id}
-              authorHref={`/profile/${tweet.author.handle}`}
-              tweetHref={`/tweet/${tweet.id}`}
-              src={tweet.author.avatarSrc}
-              name={tweet.author.displayName}
-              handle={tweet.author.handle}
-              timestamp={tweet.timestamp}
-              status={tweet.status}
-            />
-          );
-        })
-      ) : (
-        <div>loading</div>
-      )}
-    </Wrapper>
+    </>
   );
 };
 

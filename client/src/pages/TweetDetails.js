@@ -1,10 +1,13 @@
 import React, { useContext, useState, useEffect } from "react";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
+import { ErrorPage } from "../pages/ErrorPage";
 
-import { EachTweet } from "../components/tweet";
+import { BigTweet } from "../components/BigTweet";
 
 const TweetDetails = () => {
+  const [errorMsg, setErrorMsg] = useState("");
+
   const [tweet, setTweet] = useState();
   const params = useParams();
   const tweetId = params.tweetId;
@@ -15,28 +18,43 @@ const TweetDetails = () => {
       .then((res) => res.json())
       .then((res) => {
         setTweet(res.tweet);
+        console.log(tweet);
+      })
+      .catch((error) => {
+        console.log(error);
+        setErrorMsg("error");
       });
   }, []);
 
   console.log(tweet);
 
   return (
-    <Wrapper>
-      {tweet ? (
-        <EachTweet
-          key={tweet.id}
-          authorHref={`/profile/${tweet.author.handle}`}
-          tweetHref={`/tweet/${tweet.id}`}
-          src={tweet.author.avatarSrc}
-          name={tweet.author.displayName}
-          handle={tweet.author.handle}
-          timestamp={tweet.timestamp}
-          status={tweet.status}
-        />
+    <>
+      {errorMsg === "error" ? (
+        <ErrorPage />
       ) : (
-        <div>loading</div>
+        <Wrapper>
+          {tweet ? (
+            <BigTweet
+              key={tweet.id}
+              tweetId={tweet.id}
+              authorHref={`/profile/${tweet.author.handle}`}
+              tweetHref={`/tweet/${tweet.id}`}
+              src={tweet.author.avatarSrc}
+              name={tweet.author.displayName}
+              handle={tweet.author.handle}
+              timestamp={tweet.timestamp}
+              status={tweet.status}
+              media={tweet.media}
+              tweetLiked={tweet.isLiked}
+              numLikes={tweet.numLikes}
+            />
+          ) : (
+            <div>loading</div>
+          )}
+        </Wrapper>
       )}
-    </Wrapper>
+    </>
   );
 };
 

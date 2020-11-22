@@ -8,7 +8,20 @@ const users = {
     url: "http://fco.gov.uk",
     joined: "2016-02-02T12:00",
     bio: "Best friends with @treasurymog.",
-    followingIds: ["treasurymog"],
+    followingIds: ["treasurymog"], // double arrow follow
+    followerIds: ["treasurymog", "truecat"],
+    likeIds: ["1212689921057665024"],
+  },
+  truecat: {
+    handle: "truecat",
+    displayName: "truecat",
+    avatarSrc: "/assets/trueCat-avatar.jpg",
+    bannerSrc: "/assets/diplomog-banner.jpeg", // stealing other's banner :D
+    location: "Engliand",
+    url: "http://fco.gov.uk", // and link :)
+    joined: "2016-02-03T12:00",
+    bio: "I am a cat, not a hooman. Hoomans are evil.",
+    followingIds: ["treasurymog", "diplomog"], // single arrow follow diplomog
     followerIds: ["treasurymog"],
     likeIds: ["1212689921057665024"],
   },
@@ -22,9 +35,13 @@ const users = {
     joined: "2016-10-12T12:00",
     bio:
       "I live and work at the Treasury as a mouser but I also have a paw in the finances. Here to help lighten up the political world. Unofficial.",
-    followingIds: ["diplomog", "giantcat9"],
-    followerIds: ["diplomog", "giantcat9"],
-    likeIds: ["1209791721099411456"],
+    followingIds: ["diplomog", "giantcat9", "truecat"],
+    followerIds: ["diplomog", "giantcat9", "truecat"],
+    likeIds: [
+      "1209791721099411456",
+      "1212689921057665029",
+      "1212689921057665024",
+    ],
   },
   giantcat9: {
     handle: "giantcat9",
@@ -40,11 +57,42 @@ const users = {
       "Just giant cats with military hardware. \nInstagram: @giantmilitarycats",
     followingIds: ["treasurymog"],
     followerIds: ["treasurymog"],
-    likeIds: [],
+    likeIds: ["1209791721099411456r1"],
   },
 };
 
 const tweets = {
+  // truecat
+  "1212689921057665029": {
+    id: "1212689921057665029",
+    authorHandle: "truecat",
+    timestamp: "2019-12-31T14:38:00+00:00",
+    sortedTimestamp: "2019-12-31T14:38:00+00:00",
+    likedBy: ["treasurymog"],
+    retweetedBy: ["treasurymog"],
+    status: "I need some kibbles.",
+    media: [],
+  },
+  "1215324598067245056r1": {
+    id: "1215324598067245056r1",
+    authorHandle: "truecat",
+    timestamp: "2020-01-23T09:14:00+00:00",
+    sortedTimestamp: "2020-01-23T09:14:00+00:00",
+    retweetOf: "1215324598067245056",
+    likedBy: [],
+    retweetedBy: [],
+  },
+  /*"1209791721099411456r1r1": {
+    // the retweet of retweet => currently not surrpoted by the programs
+    // may comeback later!
+    id: "1209791721099411456r1r1",
+    authorHandle: "truecat",
+    timestamp: "2020-01-19T10:14:00+00:00",
+    sortedTimestamp: "2020-01-19T10:14:00+00:00",
+    retweetOf: "1209791721099411456r1",
+    likedBy: [],
+    retweetedBy: [],
+  },*/
   // TreasuryMog
   "1209791721099411456r1": {
     id: "1209791721099411456r1",
@@ -52,15 +100,25 @@ const tweets = {
     timestamp: "2020-01-19T09:14:00+00:00",
     sortedTimestamp: "2020-01-19T09:14:00+00:00",
     retweetOf: "1209791721099411456",
-    likedBy: [],
+    likedBy: ["giantcat9"],
+    retweetedBy: ["truecat"],
+  },
+  "1212689921057665029r1": {
+    id: "1212689921057665029r1",
+    authorHandle: "treasurymog",
+    timestamp: "2020-01-03T14:38:00+00:00",
+    sortedTimestamp: "2020-01-03T14:38:00+00:00",
+    retweetOf: "1212689921057665029",
+    likedBy: ["giantcat9"],
     retweetedBy: [],
   },
+
   "1212689921057665024": {
     id: "1212689921057665024",
     authorHandle: "treasurymog",
     timestamp: "2020-01-12T09:14:00+00:00",
     sortedTimestamp: "2020-01-12T09:14:00+00:00",
-    likedBy: [],
+    likedBy: ["diplomog", "truecat", "treasurymog"],
     retweetedBy: [],
     status:
       "Ok people #backtowork you go. Cats...just carry on lounging around as usual.",
@@ -78,7 +136,7 @@ const tweets = {
     authorHandle: "diplomog",
     timestamp: "2019-12-26T14:38:00+00:00",
     sortedTimestamp: "2019-12-26T14:38:00+00:00",
-    likedBy: [],
+    likedBy: ["treasurymog"],
     retweetedBy: ["treasurymog"],
     status:
       "If you're a 🇬🇧 diplomat abroad today, let me know where you are and what you're up to!",
@@ -88,8 +146,8 @@ const tweets = {
   "1215324598067245056r2": {
     id: "1215324598067245056r2",
     authorHandle: "diplomog",
-    timestamp: "2020-01-19T09:14:00+00:00",
-    sortedTimestamp: "2020-01-19T09:14:00+00:00",
+    timestamp: "2020-01-21T09:14:00+00:00",
+    sortedTimestamp: "2020-01-21T09:14:00+00:00",
     retweetOf: "1215324598067245056",
     likedBy: [],
     retweetedBy: [],
@@ -103,7 +161,6 @@ const tweets = {
     likedBy: [],
     retweetedBy: [],
     status: `Sometimes I wonder... am I playing with the ribbon or is the ribbon playing with me?
-
 Maybe a more diplomatic approach will work 🤔`,
     media: [
       {
@@ -120,7 +177,6 @@ Maybe a more diplomatic approach will work 🤔`,
     likedBy: [],
     retweetedBy: [],
     status: `Moggy Christmas to all!
-
 Special wishes to all my diplomats, far from home at this time of year, serving 🇬🇧 all over the 🌍.`,
     media: [
       {
@@ -137,9 +193,7 @@ Special wishes to all my diplomats, far from home at this time of year, serving 
     likedBy: [],
     retweetedBy: [],
     status: `2019 has a been a wonderful year, but I definitely deserve some rest!
-
 I would love to know what my 🇬🇧diplomats have been getting up to! What’s been your highlight or biggest achievement of the year?
-
 My highlight has been coming back to work with my very own Palmy HQ 🤩`,
     media: [
       {
@@ -176,10 +230,10 @@ My highlight has been coming back to work with my very own Palmy HQ 🤩`,
   "1215324598067245056": {
     id: "1215324598067245056",
     authorHandle: "giantcat9",
-    timestamp: "2020-01-06T09:20:00+00:00",
-    sortedTimestamp: "2020-01-06T09:20:00+00:00",
+    timestamp: "2020-01-06T09:05:00+00:00",
+    sortedTimestamp: "2020-01-06T09:05:00+00:00",
     likedBy: [],
-    retweetedBy: ["diplomog"],
+    retweetedBy: ["diplomog", "truecat"],
     status: `JAS 39 Gripen`,
     media: [
       {

@@ -1,5 +1,4 @@
 import React from "react";
-import styled from "styled-components";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import HomeFeed from "./pages/HomeFeed";
 import Notifications from "./pages/Notifications";
@@ -8,6 +7,7 @@ import TweetDetails from "./pages/TweetDetails";
 import Profile from "./pages/Profile";
 import Sidebar from "./components/Sidebar";
 import GlobalStyle from "./pages/GlobalStyles";
+import { ErrorPage } from "./pages/ErrorPage";
 
 const App = () => {
   return (
@@ -30,7 +30,9 @@ const App = () => {
         <Route exact path="/profile/:profileId">
           <Profile />
         </Route>
-        <Route path="">404: Oops! page does not exist!</Route>
+        <Route path="/error">
+          <ErrorPage />
+        </Route>
       </Switch>
     </BrowserRouter>
   );
